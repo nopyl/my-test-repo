@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import db from "../services/database/service.database.js";
+import bcrypt from "bcryptjs"
 
 const User = db.define("User", {
     uuid: {
@@ -82,6 +83,16 @@ const User = db.define("User", {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
     }
+
+}, {timestamps: false});
+
+User.addHook("beforeSave", (user) => {
+
+    if(user.changed("password")){
+        const hash = bcrypt.hashSync(user.password, bcrypt.genSaltSync());
+        user.password = hash;
+    }
+
 });
 
 await User.sync();
