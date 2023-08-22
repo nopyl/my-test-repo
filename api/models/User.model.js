@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import db from "../services/database/service.database.js";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const User = db.define("User", {
     uuid: {
@@ -94,6 +95,25 @@ User.addHook("beforeSave", (user) => {
     }
 
 });
+
+User.prototype.generateJwt = function(){
+
+    const {JWT_SECRET_KEY, JWT_ISSUER, JWT_AUDIENCE, JWT_EXPIRES} = req.se
+ 
+    const payload = {
+        uuid: this.uuid,
+        email: this.email
+    };
+
+    const token = jwt.sign(payload, JWT_SECRET_KEY, {
+        issuer: JWT_ISSUER,
+        audience: JWT_AUDIENCE,
+        notBefore: Date.now(),
+        expiresIn: JWT_EXPIRES
+    });
+
+    return token;
+}
 
 await User.sync();
 export default User;
