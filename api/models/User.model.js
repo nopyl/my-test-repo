@@ -98,7 +98,7 @@ User.addHook("beforeSave", (user) => {
 
 User.prototype.generateJwt = function(){
 
-    const {JWT_SECRET_KEY, JWT_ISSUER, JWT_AUDIENCE, JWT_EXPIRES} = req.se
+    const {JWT_SECRET_KEY, JWT_ISSUER, JWT_AUDIENCE, JWT_EXPIRES} = process.env;
  
     const payload = {
         uuid: this.uuid,
