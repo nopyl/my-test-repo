@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import Message from "../../utils/message/util.message.js";
+import Message from "../../utils/message/message.util.js";
 import dotenv from "dotenv";
 
 dotenv.config({ path: "./config/config.env"});
