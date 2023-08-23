@@ -6,6 +6,7 @@ import CustomError from "../utils/error/CustomError.js";
 import { sendTokenToCookie } from "../utils/helpers/token.helper.js";
 import { sendEmailVerificationLink } from "../services/email/email.service.js";
 import bcrypt from "bcryptjs";
+import { Op } from "sequelize";
 
 export const signUp = errorWrapper(async(req, res, next) => {
 
@@ -70,6 +71,43 @@ export const sendEmailVerificationEmail = errorWrapper(async(req, res, next) => 
     .json({
         success: true,
         message: Message.EmailVerificationLinkSent
+    });
+
+});
+
+export const verifyEmail = errorWrapper(async(req, res, next) => {
+
+    const {emailVerificationToken} = req.query;
+
+    if(!emailVerificationToken){
+        return next(new CustomError(400, Message.UserNotFound));
+    }
+
+    const user = await User.findOne({
+        where: {
+            emailCode: emailVerificationToken
+        }
+    });
+
+    if(!user){
+        return next(new CustomError(400, Message.UserNotFound));
+    }
+
+    if(user.emailCodeExpires < Date.now()){
+        return next(new CustomError(400, Message.EmailVerificationTokenExpired));
+    }
+
+    user.emailCode = null;
+    user.emailCodeExpires = null;
+    user.isEmailVerified = true;
+
+    await user.save();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.EmailVerified
     });
 
 });

@@ -8,6 +8,8 @@ class Message {
     static InvalidCredentials = "Invalid credentials";
     static EmailVerificationLinkSent = "Email verification link has been successfully sent";
     static EmailAlreadyVerified = "Email has already been verified";
+    static EmailVerificationTokenExpired = "Email verification token expired";
+    static EmailVerified = "Email has been successfully verified";
 }
 
 export default Message;
