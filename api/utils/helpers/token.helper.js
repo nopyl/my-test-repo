@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 export const sendTokenToCookie = (user, res) => {
 
     const { NODE_ENV, COOKIE_EXPIRES } = process.env;
@@ -14,4 +16,9 @@ export const sendTokenToCookie = (user, res) => {
         success: true
     });
 
+}
+
+export const generateRandomToken = (size) => {
+    
+    return crypto.randomBytes(size).toString("hex");
 }
