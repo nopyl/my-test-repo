@@ -6,6 +6,8 @@ class Message {
     static Unauthorized = "Unauthorized";
     static UserNotFound = "User not found";
     static InvalidCredentials = "Invalid credentials";
+    static EmailVerificationLinkSent = "Email verification link has been successfully sent";
+    static EmailAlreadyVerified = "Email has already been verified";
 }
 
 export default Message;

@@ -54,3 +54,22 @@ export const signIn = errorWrapper(async(req, res, next) => {
     sendTokenToCookie(user, res);
 
 });
+
+export const sendEmailVerificationEmail = errorWrapper(async(req, res, next) => {
+
+    const user = req.queryResult;
+
+    if(user.isEmailVerified){
+        return next(new CustomError(400, Message.EmailAlreadyVerified));
+    }
+
+    sendEmailVerificationLink(user, next);
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.EmailVerificationLinkSent
+    });
+
+});
