@@ -4,6 +4,7 @@ import { checkPasswordRegExp, validateInputs } from "../utils/helpers/input.help
 import Message from "../utils/message/message.util.js";
 import CustomError from "../utils/error/CustomError.js";
 import { sendTokenToCookie } from "../utils/helpers/token.helper.js";
+import { sendEmailVerificationLink } from "../services/email/email.service.js";
 
 export const signUp = errorWrapper(async(req, res, next) => {
 
@@ -16,7 +17,7 @@ export const signUp = errorWrapper(async(req, res, next) => {
     if(!checkPasswordRegExp(password)){
         return next(new CustomError(400, Message.InvalidPasswordFormat));
     }
-
+    
     const user = await User.create({
         email: email,
         password: password,
@@ -24,6 +25,8 @@ export const signUp = errorWrapper(async(req, res, next) => {
         dateOfBirth: dateOfBirth     
     });
 
+    sendEmailVerificationLink(user, next);
+    
     sendTokenToCookie(user, res);
 
 });
