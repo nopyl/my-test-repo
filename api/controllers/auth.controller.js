@@ -5,6 +5,7 @@ import Message from "../utils/message/message.util.js";
 import CustomError from "../utils/error/CustomError.js";
 import { sendTokenToCookie } from "../utils/helpers/token.helper.js";
 import { sendEmailVerificationLink } from "../services/email/email.service.js";
+import bcrypt from "bcryptjs";
 
 export const signUp = errorWrapper(async(req, res, next) => {
 
@@ -27,6 +28,29 @@ export const signUp = errorWrapper(async(req, res, next) => {
 
     sendEmailVerificationLink(user, next);
     
+    sendTokenToCookie(user, res);
+
+});
+
+export const signIn = errorWrapper(async(req, res, next) => {
+
+    const {email, password} = req.body;
+
+    if(!validateInputs(email, password)){
+        return next(new CustomError(400, Message.BlankInputs));
+    }
+
+    const user = req.queryResult;
+
+    if(!bcrypt.compareSync(password, user.password)){
+        return next(new CustomError(401, Message.InvalidCredentials));
+    }
+
+    if(user.isActive === false && user.isBlocked !== true){
+
+        await user.save({isActive: true});
+    }
+
     sendTokenToCookie(user, res);
 
 });
