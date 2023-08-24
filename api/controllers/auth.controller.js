@@ -111,3 +111,42 @@ export const verifyEmail = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const passwordChange = errorWrapper(async(req, res, next) => {
+
+
+    const {oldPassword, newPassword, newPasswordRepeat} = req.body;
+    
+    const user = req.user;
+
+    if(!validateInputs(oldPassword, newPassword, newPasswordRepeat)){
+        
+        return next(new CustomError(400, Message.BlankInputs));
+    }
+    
+    if(newPassword !== newPasswordRepeat){
+        return next(new CustomError(400, Message.PasswordsDoNotMatch))
+    }
+    
+    if(!checkPasswordRegExp(newPassword)){
+        
+        return next(new CustomError(400, Message.InvalidPasswordFormat));
+    }
+ 
+    if(!bcrypt.compareSync(oldPassword, user.password)){
+        
+        return next(new CustomError(401, Message.InvalidCredentials));
+    }
+
+    user.password = newPassword;
+    user.lastPasswordChangedAt = Date.now();
+    user.save();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.PasswordChanged
+    });
+
+});

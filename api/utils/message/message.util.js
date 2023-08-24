@@ -10,6 +10,8 @@ class Message {
     static EmailAlreadyVerified = "Email has already been verified";
     static EmailVerificationTokenExpired = "Email verification token expired";
     static EmailVerified = "Email has been successfully verified";
+    static PasswordsDoNotMatch = "Passwords do not match";
+    static PasswordChanged = "Password has been successfully changed";
 }
 
 export default Message;

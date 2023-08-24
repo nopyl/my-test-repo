@@ -6,6 +6,8 @@ import "./services/database/service.database.js";
 import { errorHandler } from "./middlewares/error/error.middleware.js";
 import { appRouter } from "./routers/index.router.js";
 import cookieParser from "cookie-parser";
+import passport from "passport";
+import * as jwt from "./authentication/jwt/jwt.authentication.js";
 
 dotenv.config({ path: "./config/config.env" });
 const app = express();
@@ -13,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+app.use(passport.initialize());
 app.use("/api", appRouter);
 app.use(errorHandler);
 
