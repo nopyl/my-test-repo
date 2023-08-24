@@ -108,7 +108,7 @@ User.prototype.generateJwt = function(){
     const token = jwt.sign(payload, JWT_SECRET_KEY, {
         issuer: JWT_ISSUER,
         audience: JWT_AUDIENCE,
-        notBefore: Date.now(),
+        notBefore: Date.now,
         expiresIn: JWT_EXPIRES
     });
 
