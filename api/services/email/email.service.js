@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { generateRandomToken } from "../../utils/helpers/token.helper.js";
 import { MailOption } from "./MailOption.js";
 import { MailInfo } from "./MailInfo.js";
+import bcrypt from "bcryptjs";
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -33,18 +34,47 @@ export const sendEmailVerificationLink = async(user, next) => {
     try{
         user.emailCode = randomToken;
         user.emailCodeExpires = new Date(Date.now() + Number(EMAIL_VERIFICATION_TOKEN_EXPIRES));
-        user.save();
+        
+        await user.save();
     }
     catch(err){
         next(err);
     }
 
-    console.log(MailInfo.EmailVerificationBody(link));
-
     const option = new MailOption(
         user.email, 
         MailInfo.EmailVerificationSubject, 
         MailInfo.EmailVerificationBody(link)
+    );
+
+    sendMail(option);
+
+}
+
+export const sendResetPasswordLink = async(user, next) => {
+
+    const {DOMAIN, RESET_PASSWORD_TOKEN_EXPIRES} = process.env;
+
+    const randomToken = generateRandomToken(25);
+    const hash = bcrypt.hashSync(randomToken, bcrypt.genSaltSync());
+
+    const link = `${DOMAIN}/auth/password/reset?resetPasswordToken=${hash}`;
+
+    try{
+        
+        user.resetPasswordToken = hash;
+        user.resetPasswordTokenExpires = new Date(Date.now() + Number(RESET_PASSWORD_TOKEN_EXPIRES));
+        
+        await user.save();
+    }
+    catch(err){
+        return next(err);
+    }
+
+    const option = new MailOption(
+        user.email,
+        MailInfo.ResetPasswordSubject,
+        MailInfo.ResetPasswordLink(link)
     );
 
     sendMail(option);

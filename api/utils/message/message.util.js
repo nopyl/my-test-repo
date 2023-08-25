@@ -12,6 +12,7 @@ class Message {
     static EmailVerified = "Email has been successfully verified";
     static PasswordsDoNotMatch = "Passwords do not match";
     static PasswordChanged = "Password has been successfully changed";
+    static ResetPasswordLinkSent = "Reset Password link has been successfully sent";
 }
 
 export default Message;

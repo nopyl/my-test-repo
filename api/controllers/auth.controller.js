@@ -4,7 +4,7 @@ import { checkPasswordRegExp, validateInputs } from "../utils/helpers/input.help
 import Message from "../utils/message/message.util.js";
 import CustomError from "../utils/error/CustomError.js";
 import { sendTokenToCookie } from "../utils/helpers/token.helper.js";
-import { sendEmailVerificationLink } from "../services/email/email.service.js";
+import { sendEmailVerificationLink, sendResetPasswordLink } from "../services/email/email.service.js";
 import bcrypt from "bcryptjs";
 import { Op } from "sequelize";
 
@@ -140,13 +140,28 @@ export const passwordChange = errorWrapper(async(req, res, next) => {
 
     user.password = newPassword;
     user.lastPasswordChangedAt = Date.now();
-    user.save();
+    await user.save();
 
     return res
     .status(200)
     .json({
         success: true,
         message: Message.PasswordChanged
+    });
+
+});
+
+export const forgotPassword = errorWrapper(async(req, res, next) => {
+
+    const user = req.queryResult;
+
+    sendResetPasswordLink(user);
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.ResetPasswordLinkSent
     });
 
 });
