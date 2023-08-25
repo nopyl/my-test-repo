@@ -68,10 +68,10 @@ const User = db.define("User", {
         type: DataTypes.DATE,
         defaultValue: null
     },
-    lastEmailChangedAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
-    },
+    // lastEmailChangedAt: {
+    //     type: DataTypes.DATE,
+    //     defaultValue: DataTypes.NOW
+    // },
     lastPasswordChangedAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
