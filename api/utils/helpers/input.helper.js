@@ -16,3 +16,10 @@ export const checkPasswordRegExp = (password) => {
     const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     return passwordRegExp.test(password);
 }
+
+export const checkPhoneRegExp = (phoneNumber) => {
+
+    const phoneRegExp = /^\+[1-9]{1}[0-9]{7,11}$/;
+    return phoneRegExp.test(phoneNumber);
+
+}
