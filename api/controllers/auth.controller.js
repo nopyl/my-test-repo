@@ -281,3 +281,34 @@ export const addPhoneNumber = errorWrapper(async(req, res, next) => {
     })
 
 });
+
+export const verifyPhone = errorWrapper(async(req, res, next) => {
+
+    const {phoneCode} = req.body;
+    const user = req.user;
+
+    if(user.phoneNumberCode !== phoneCode){
+
+        return next(new CustomError(400, Message.InvalidPhoneCode));
+    }
+
+    if(user.phoneNumberCodeExpires < Date.now()){
+
+        return next(new CustomError(400, Message.PhoneCodeExpired));
+    }
+
+    user.phoneNumberCode = null;
+    user.phoneNumberCodeExpires = null;
+    user.isPhoneNumberVerified = true;
+
+    await user.save();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.PhoneNumberVerified
+    });
+
+
+});

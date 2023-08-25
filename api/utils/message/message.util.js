@@ -18,6 +18,9 @@ class Message {
     static CircularEmail = "The e-mail address of your account is the same as the e-mail address you want to change";
     static InvalidPhoneFormat = "Invalid phone number format";
     static PhoneVerificationCodeSent = "Phone verification code has been successfully sent";
+    static InvalidPhoneCode = "Invalid phone code";
+    static PhoneCodeExpired = "Phone code expired";
+    static PhoneNumberVerified = "Phone number has been successfully verified";
 }
 
 export default Message;

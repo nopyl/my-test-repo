@@ -35,6 +35,7 @@ const User = db.define("User", {
     phoneNumber: {
         type: DataTypes.STRING,
         defaultValue: null,
+        unique: true
     },
     phoneNumberCode: {
         type: DataTypes.STRING,
