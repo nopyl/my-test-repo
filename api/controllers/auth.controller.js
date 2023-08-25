@@ -6,8 +6,7 @@ import CustomError from "../utils/error/CustomError.js";
 import { sendTokenToCookie } from "../utils/helpers/token.helper.js";
 import { sendEmailVerificationLink, sendResetPasswordLink } from "../services/email/email.service.js";
 import bcrypt from "bcryptjs";
-import { Op } from "sequelize";
-import { sendPhoneVerificationCode } from "../services/sms/sms.service.js";
+import { sendPhoneVerificationCode, phoneCodeValidation } from "../services/sms/sms.service.js";
 
 export const signUp = errorWrapper(async(req, res, next) => {
 
@@ -286,11 +285,6 @@ export const sendPhoneVerification = errorWrapper(async(req, res, next) => {
 
     const user = req.user;
 
-    if(user.isPhoneNumberVerified){
-        
-        return next(new CustomError(400, Message.PhoneAlreadyVerified));
-    }
-
     sendPhoneVerificationCode(user, next);
 
     return res
@@ -307,15 +301,12 @@ export const verifyPhone = errorWrapper(async(req, res, next) => {
     const {phoneCode} = req.body;
     const user = req.user;
 
-    if(user.phoneNumberCode !== phoneCode){
-
-        return next(new CustomError(400, Message.InvalidPhoneCode));
+    if(user.isPhoneNumberVerified){
+        
+        return next(new CustomError(400, Message.PhoneAlreadyVerified));
     }
 
-    if(user.phoneNumberCodeExpires < Date.now()){
-
-        return next(new CustomError(400, Message.PhoneCodeExpired));
-    }
+    phoneCodeValidation(user, phoneCode, next);
 
     user.phoneNumberCode = null;
     user.phoneNumberCodeExpires = null;
@@ -330,5 +321,25 @@ export const verifyPhone = errorWrapper(async(req, res, next) => {
         message: Message.PhoneNumberVerified
     });
 
+
+});
+
+export const validatePhoneCode = errorWrapper(async(req, res, next) => {
+    
+    const {phoneCode} = req.body;
+    const user = req.user;
+
+    phoneCodeValidation(user, phoneCode, next);
+
+    user.phoneNumberCode = null;
+    user.phoneNumberCodeExpires = null;
+    
+    await user.save();
+
+    return res
+    .status(200)
+    .json({
+        success: true
+    });
 
 });
