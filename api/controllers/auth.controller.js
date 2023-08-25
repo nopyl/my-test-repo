@@ -112,6 +112,46 @@ export const verifyEmail = errorWrapper(async(req, res, next) => {
 
 });
 
+export const changeEmail = errorWrapper(async(req, res, next) => {
+
+    //To be refactored
+
+    const {email} = req.body; 
+    const user = req.user;
+
+    if(!email){
+        return next(new CustomError(400, Message.BlankInputs));
+    }
+
+    if(user.email === email){
+        return next(new CustomError(400, Message.CircularEmail))
+    }
+
+    const isEmailExists = await User.count({
+        where: {
+            email: email
+        }
+    });
+
+    if(isEmailExists > 0){
+        return next(new CustomError(400, Message.EmailAlreadyInUse));
+    }   
+
+    user.email = email;
+    user.isEmailVerified = false;
+    // user.lastEmailChanged = Date.now();
+
+    sendEmailVerificationLink(user, next);
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.EmailVerificationLinkSent
+    });
+
+});
+
 export const passwordChange = errorWrapper(async(req, res, next) => {
 
 

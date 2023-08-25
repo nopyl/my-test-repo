@@ -68,6 +68,10 @@ const User = db.define("User", {
         type: DataTypes.DATE,
         defaultValue: null
     },
+    lastEmailChangedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW
+    },
     lastPasswordChangedAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
@@ -108,7 +112,6 @@ User.prototype.generateJwt = function(){
     const token = jwt.sign(payload, JWT_SECRET_KEY, {
         issuer: JWT_ISSUER,
         audience: JWT_AUDIENCE,
-        notBefore: Date.now,
         expiresIn: JWT_EXPIRES
     });
 
