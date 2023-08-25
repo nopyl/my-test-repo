@@ -1,12 +1,13 @@
 import errorWrapper from "express-async-handler";
 import User from "../models/User.model.js";
-import { checkPasswordRegExp, validateInputs } from "../utils/helpers/input.helper.js";
+import { checkPasswordRegExp, checkPhoneRegExp, validateInputs } from "../utils/helpers/input.helper.js";
 import Message from "../utils/message/message.util.js";
 import CustomError from "../utils/error/CustomError.js";
 import { sendTokenToCookie } from "../utils/helpers/token.helper.js";
 import { sendEmailVerificationLink, sendResetPasswordLink } from "../services/email/email.service.js";
 import bcrypt from "bcryptjs";
 import { Op } from "sequelize";
+import { sendPhoneVerificationCode } from "../services/sms/sms.service.js";
 
 export const signUp = errorWrapper(async(req, res, next) => {
 
@@ -256,4 +257,27 @@ export const resetPassword = errorWrapper(async(req, res, next) => {
         message: Message.PasswordChanged
     });
     
+});
+
+export const addPhoneNumber = errorWrapper(async(req, res, next) => {
+
+    const {phoneNumber} = req.body;
+    const user = req.user;
+
+    if(!checkPhoneRegExp(phoneNumber)){
+        
+        return next(new CustomError(400, Message.InvalidPhoneFormat));
+    }
+
+    user.phoneNumber = phoneNumber;
+
+    sendPhoneVerificationCode(user, next);
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.PhoneVerificationCodeSent
+    })
+
 });

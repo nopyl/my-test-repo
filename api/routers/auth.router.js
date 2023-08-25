@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signUp, signIn, sendEmailVerificationEmail, verifyEmail, changeEmail, passwordChange, forgotPassword, resetPassword } from "../controllers/auth.controller.js";
+import { signUp, signIn, sendEmailVerificationEmail, verifyEmail, changeEmail, passwordChange, forgotPassword, resetPassword, addPhoneNumber } from "../controllers/auth.controller.js";
 import { checkUserExists } from "../middlewares/query/query.middleware.js";
 import passport from "passport";
 
@@ -13,3 +13,4 @@ authRouter.patch("/email/change", passport.authenticate("jwt", {session: false})
 authRouter.patch("/password/change",  passport.authenticate("jwt", {session: false}), passwordChange);
 authRouter.post("/password/forgot", checkUserExists, forgotPassword);
 authRouter.patch("/password/reset", resetPassword);
+authRouter.post("/phone/add", passport.authenticate("jwt", {session: false}), addPhoneNumber);

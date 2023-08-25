@@ -15,7 +15,9 @@ class Message {
     static ResetPasswordLinkSent = "Reset Password link has been successfully sent";
     static ResetPasswordTokenExpired = "Reset password token expired";
     static ResetPasswordTokenNotFound = "Reset password token can not be null";
-    static CircularEmail = "The e-mail address of your account is the same as the e-mail address you want to change"
+    static CircularEmail = "The e-mail address of your account is the same as the e-mail address you want to change";
+    static InvalidPhoneFormat = "Invalid phone number format";
+    static PhoneVerificationCodeSent = "Phone verification code has been successfully sent";
 }
 
 export default Message;
