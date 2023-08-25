@@ -21,6 +21,7 @@ class Message {
     static InvalidPhoneCode = "Invalid phone code";
     static PhoneCodeExpired = "Phone code expired";
     static PhoneNumberVerified = "Phone number has been successfully verified";
+    static PhoneAlreadyVerified = "Your phone number is already verified";
 }
 
 export default Message;

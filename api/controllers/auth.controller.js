@@ -282,6 +282,26 @@ export const addPhoneNumber = errorWrapper(async(req, res, next) => {
 
 });
 
+export const sendPhoneVerification = errorWrapper(async(req, res, next) => {
+
+    const user = req.user;
+
+    if(user.isPhoneNumberVerified){
+        
+        return next(new CustomError(400, Message.PhoneAlreadyVerified));
+    }
+
+    sendPhoneVerificationCode(user, next);
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.PhoneVerificationCodeSent
+    });
+
+});
+
 export const verifyPhone = errorWrapper(async(req, res, next) => {
 
     const {phoneCode} = req.body;
