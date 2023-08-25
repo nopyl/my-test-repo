@@ -13,6 +13,8 @@ class Message {
     static PasswordsDoNotMatch = "Passwords do not match";
     static PasswordChanged = "Password has been successfully changed";
     static ResetPasswordLinkSent = "Reset Password link has been successfully sent";
+    static ResetPasswordTokenExpired = "Reset password token expired";
+    static ResetPasswordTokenNotFound = "Reset password token can not be null";
 }
 
 export default Message;

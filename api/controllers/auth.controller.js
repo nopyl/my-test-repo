@@ -165,3 +165,55 @@ export const forgotPassword = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const resetPassword = errorWrapper(async(req, res, next) => {
+
+    const { resetPasswordToken } = req.query;
+    const { password, passwordRepeat } = req.body;
+    
+    if(!resetPasswordToken){
+        
+        return next(new CustomError(400, Message.ResetPasswordTokenNotFound));
+    }
+
+    if(!validateInputs(password, passwordRepeat)){
+        return next(new CustomError(400, Message.BlankInputs));
+    }
+
+    const user = await User.findOne({
+        where: {
+            resetPasswordToken: resetPasswordToken
+        }
+    });
+
+    if(!user){
+        return next(new CustomError(404, Message.UserNotFound));
+    }
+
+    if(user.resetPasswordTokenExpires < Date.now()){
+        
+        return next(new CustomError(400, Message.ResetPasswordTokenExpired));
+    }
+
+    if(password !== passwordRepeat){
+
+        return next(new CustomError(400, Message.PasswordsDoNotMatch));
+    }
+
+    if(!checkPasswordRegExp(password)){
+        return next(new CustomError(400, Message.InvalidPasswordFormat));
+    }
+
+    user.password = password;
+    user.lastPasswordChangedAt = Date.now();
+
+    await user.save();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.PasswordChanged
+    });
+    
+});
