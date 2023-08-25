@@ -2,7 +2,7 @@ export const validateInputs = (...inputs) => {
 
     for (let i = 0; i < inputs.length; i++) {
         
-        if(inputs[i] === null){
+        if(inputs[i] === undefined || null){
 
             return false;
         }
