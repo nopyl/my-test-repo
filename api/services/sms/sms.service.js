@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import { generateRandomInt } from "../../utils/helpers/token.helper.js";
 import { SmsOption } from "./SmsOption.js";
 import { SmsInfo } from "./SmsInfo.js";
+import Message from "../../utils/message/message.util.js";
+import CustomError from "../../utils/error/CustomError.js";
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -48,5 +50,20 @@ export const sendPhoneVerificationCode = async(user, next) => {
     );
 
     sendSms(option);
+
+}
+
+export const phoneCodeValidation = async(user, phoneCode, next) => {
+
+    if(user.phoneNumberCode !== phoneCode){
+
+        return next(new CustomError(400, Message.InvalidPhoneCode));
+
+    } 
+
+    if(user.phoneNumberCodeExpires < Date.now()){
+
+        return next(new CustomError(400, Message.PhoneCodeExpired));
+    }
 
 }
