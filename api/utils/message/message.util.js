@@ -22,6 +22,9 @@ class Message {
     static PhoneCodeExpired = "Phone code expired";
     static PhoneNumberVerified = "Phone number has been successfully verified";
     static PhoneAlreadyVerified = "Your phone number is already verified";
+    static InvalidCode = "Invalid two factor authentication code";
+    static TwoFactorAuthAlreadyEnabled = "Two factor authentication is already enabled";
+    static TwoFactorAuthEnabled = "Two factor authentication has been successfully enabled";
 }
 
 export default Message;

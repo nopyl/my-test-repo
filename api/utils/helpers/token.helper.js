@@ -1,4 +1,5 @@
 import crypto, { randomInt } from "crypto";
+import speakeasy from "speakeasy";
 
 export const sendTokenToCookie = (user, res) => {
 
@@ -29,4 +30,15 @@ export const generateRandomInt = (digits) => {
     const maxRange = 10 ** digits - 1;
 
     return Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+}
+
+export const checkTwoFactorAuthCode = (code, secret) => {
+
+    return speakeasy.totp.verify({
+        token: code,
+        secret: secret,
+        encoding: "base32",
+        window: 4
+    });
+
 }

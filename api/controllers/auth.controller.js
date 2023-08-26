@@ -3,7 +3,7 @@ import User from "../models/User.model.js";
 import { checkPasswordRegExp, checkPhoneRegExp, validateInputs } from "../utils/helpers/input.helper.js";
 import Message from "../utils/message/message.util.js";
 import CustomError from "../utils/error/CustomError.js";
-import { sendTokenToCookie } from "../utils/helpers/token.helper.js";
+import { checkTwoFactorAuthCode, sendTokenToCookie } from "../utils/helpers/token.helper.js";
 import { sendEmailVerificationLink, sendResetPasswordLink } from "../services/email/email.service.js";
 import bcrypt from "bcryptjs";
 import { sendPhoneVerificationCode, phoneCodeValidation } from "../services/sms/sms.service.js";
@@ -366,5 +366,33 @@ export const enableTwoFactorAuth = errorWrapper(async(req, res, next) => {
         qrCode: qrCode,
         secretKey: twoFactorAuthSecretKey.base32
     });
+
+});
+
+export const verifyTwoFactorAuth = errorWrapper(async(req, res, next) => {
+
+    const {code} = req.body;
+    const user = req.user;
+
+    if(user.isTwoFactorAuthEnabled){
+        
+        return next(new CustomError(400, Message.TwoFactorAuthAlreadyEnabled));
+    }
+
+    if(!checkTwoFactorAuthCode(code, user.twoFactorAuthSecretKey)){
+       
+        return next(new CustomError(400, Message.InvalidCode));
+    }
+
+    user.isTwoFactorAuthEnabled = true;
+    await user.save();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.TwoFactorAuthEnabled
+    });
+
 
 });
