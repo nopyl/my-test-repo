@@ -69,10 +69,18 @@ const User = db.define("User", {
         type: DataTypes.DATE,
         defaultValue: null
     },
-    // lastEmailChangedAt: {
-    //     type: DataTypes.DATE,
-    //     defaultValue: DataTypes.NOW
-    // },
+    twoFactorAuthSecretKey: {
+        type: DataTypes.STRING,
+        defaultValue: null
+    },
+    isTwoFactorAuthEnabled: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    lastEmailChangedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW
+    },
     lastPasswordChangedAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW

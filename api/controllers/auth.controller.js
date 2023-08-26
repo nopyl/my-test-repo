@@ -7,6 +7,8 @@ import { sendTokenToCookie } from "../utils/helpers/token.helper.js";
 import { sendEmailVerificationLink, sendResetPasswordLink } from "../services/email/email.service.js";
 import bcrypt from "bcryptjs";
 import { sendPhoneVerificationCode, phoneCodeValidation } from "../services/sms/sms.service.js";
+import speakeasy from "speakeasy";
+import qrcode from "qrcode";
 
 export const signUp = errorWrapper(async(req, res, next) => {
 
@@ -139,7 +141,7 @@ export const changeEmail = errorWrapper(async(req, res, next) => {
 
     user.email = email;
     user.isEmailVerified = false;
-    // user.lastEmailChanged = Date.now();
+    user.lastEmailChanged = Date.now();
 
     sendEmailVerificationLink(user, next);
 
@@ -340,6 +342,29 @@ export const validatePhoneCode = errorWrapper(async(req, res, next) => {
     .status(200)
     .json({
         success: true
+    });
+
+});
+
+export const enableTwoFactorAuth = errorWrapper(async(req, res, next) => {
+
+    const user = req.user;
+
+    const twoFactorAuthSecretKey = speakeasy.generateSecret({
+        name: "eCommerceAPI"
+    });
+
+    user.twoFactorAuthSecretKey = twoFactorAuthSecretKey.base32;
+    await user.save();
+
+    const qrCode = await qrcode.toDataURL(twoFactorAuthSecretKey.otpauth_url);
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        qrCode: qrCode,
+        secretKey: twoFactorAuthSecretKey.base32
     });
 
 });

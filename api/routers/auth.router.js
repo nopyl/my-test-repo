@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signUp, signIn, sendEmailVerificationEmail, verifyEmail, changeEmail, passwordChange, forgotPassword, resetPassword, addPhoneNumber, sendPhoneVerification, verifyPhone, validatePhoneCode } from "../controllers/auth.controller.js";
+import { signUp, signIn, sendEmailVerificationEmail, verifyEmail, changeEmail, passwordChange, forgotPassword, resetPassword, addPhoneNumber, sendPhoneVerification, verifyPhone, validatePhoneCode, enableTwoFactorAuth } from "../controllers/auth.controller.js";
 import { checkUserExists } from "../middlewares/query/query.middleware.js";
 import passport from "passport";
 
@@ -17,3 +17,4 @@ authRouter.post("/phone/add", passport.authenticate("jwt", {session: false}), ad
 authRouter.get("/phone/send", passport.authenticate("jwt", {session: false}), sendPhoneVerification);
 authRouter.post("/phone/verify", passport.authenticate("jwt", {session: false}), verifyPhone);
 authRouter.post("/phone/validate", passport.authenticate("jwt", {session: false}), validatePhoneCode);
+authRouter.get("/2fa/enable", passport.authenticate("jwt", {session: false}), enableTwoFactorAuth);
