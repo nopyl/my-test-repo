@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signUp, signIn, sendEmailVerificationEmail, verifyEmail, changeEmail, passwordChange, forgotPassword, resetPassword, addPhoneNumber, sendPhoneVerification, verifyPhone, validatePhoneCode, enableTwoFactorAuth, verifyTwoFactorAuth, validateTwoFactorAuth } from "../controllers/auth.controller.js";
+import { signUp, signIn, sendEmailVerificationEmail, verifyEmail, changeEmail, passwordChange, forgotPassword, resetPassword, addPhoneNumber, sendPhoneVerification, verifyPhone, validatePhoneCode, enableTwoFactorAuth, verifyTwoFactorAuth, validateTwoFactorAuth, disableTwoFactorAuth } from "../controllers/auth.controller.js";
 import { checkUserExists } from "../middlewares/query/query.middleware.js";
 import passport from "passport";
 
@@ -22,3 +22,4 @@ authRouter.post("/phone/validate", isAuth, validatePhoneCode);
 authRouter.get("/2fa/enable", isAuth, enableTwoFactorAuth);
 authRouter.post("/2fa/verify", isAuth, verifyTwoFactorAuth);
 authRouter.post("/2fa/validate", validateTwoFactorAuth);
+authRouter.post("/2fa/disable", isAuth, disableTwoFactorAuth);

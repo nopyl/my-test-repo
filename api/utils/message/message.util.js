@@ -26,6 +26,7 @@ class Message {
     static TwoFactorAuthAlreadyEnabled = "Two factor authentication is already enabled";
     static TwoFactorAuthEnabled = "Two factor authentication has been successfully enabled";
     static TwoFactorAuthNotEnabled = "Two factor authentication is not enabled";
+    static TwoFactorAuthDisabled = "Two factor authentication has been successfully disabled";
 }
 
 export default Message;
