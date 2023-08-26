@@ -25,6 +25,7 @@ class Message {
     static InvalidCode = "Invalid two factor authentication code";
     static TwoFactorAuthAlreadyEnabled = "Two factor authentication is already enabled";
     static TwoFactorAuthEnabled = "Two factor authentication has been successfully enabled";
+    static TwoFactorAuthNotEnabled = "Two factor authentication is not enabled";
 }
 
 export default Message;

@@ -396,3 +396,22 @@ export const verifyTwoFactorAuth = errorWrapper(async(req, res, next) => {
 
 
 });
+
+export const validateTwoFactorAuth = errorWrapper(async(req, res, next) => {
+
+    const {code} = req.body;
+    const user = req.user;
+    
+    if(user.isTwoFactorAuthEnabled !== true){
+
+        return next(new CustomError(400, Message.TwoFactorAuthNotEnabled));
+    }
+
+    if(!checkTwoFactorAuthCode(code, user.twoFactorAuthSecretKey)){
+
+        return next(new CustomError(400, Message.InvalidCode));
+    }
+
+    sendTokenToCookie(user, res);
+
+});
