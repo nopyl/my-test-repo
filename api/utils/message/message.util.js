@@ -27,6 +27,7 @@ class Message {
     static TwoFactorAuthEnabled = "Two factor authentication has been successfully enabled";
     static TwoFactorAuthNotEnabled = "Two factor authentication is not enabled";
     static TwoFactorAuthDisabled = "Two factor authentication has been successfully disabled";
+    static RoleCreated = "Role has been successfully created";
 }
 
 export default Message;
