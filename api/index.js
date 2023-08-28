@@ -8,6 +8,7 @@ import { appRouter } from "./routers/index.router.js";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import * as jwt from "./authentication/jwt/jwt.authentication.js";
+import "./models/index.model.js";
 
 dotenv.config({ path: "./config/config.env" });
 const app = express();
