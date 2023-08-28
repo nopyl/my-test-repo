@@ -30,7 +30,13 @@ export const signUp = errorWrapper(async(req, res, next) => {
         dateOfBirth: dateOfBirth     
     });
 
-    await user.addRole(await Role.findOne({where: {roleName: "Admin"}}));
+    const userRole = await Role.findOne({
+        where: {
+            roleName: "User"
+        }
+    });
+
+    await user.addRole(userRole);
 
     sendEmailVerificationLink(user, next);
 
