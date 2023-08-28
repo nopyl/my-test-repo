@@ -59,3 +59,16 @@ export const deleteRole = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const getAllRoles = errorWrapper(async(req, res, next) => {
+
+    const roles = await Role.findAll();
+    
+    return res
+    .status(200)
+    .json({
+        success: true,
+        roles: roles
+    });
+
+});
