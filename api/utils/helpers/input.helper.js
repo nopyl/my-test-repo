@@ -23,3 +23,8 @@ export const checkPhoneRegExp = (phoneNumber) => {
     return phoneRegExp.test(phoneNumber);
 
 }
+
+export const capitalize = (str) => {
+
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
