@@ -9,6 +9,7 @@ import bcrypt from "bcryptjs";
 import { sendPhoneVerificationCode, phoneCodeValidation } from "../services/sms/sms.service.js";
 import speakeasy from "speakeasy";
 import qrcode from "qrcode";
+import Role from "../models/Role.model.js";
 
 export const signUp = errorWrapper(async(req, res, next) => {
 
@@ -29,8 +30,10 @@ export const signUp = errorWrapper(async(req, res, next) => {
         dateOfBirth: dateOfBirth     
     });
 
+    await user.addRole(await Role.findOne({where: {roleName: "Admin"}}));
+
     sendEmailVerificationLink(user, next);
-    
+
     sendTokenToCookie(user, res);
 
 });
