@@ -72,3 +72,14 @@ export const getAllRoles = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const getRoleById = errorWrapper(async(req, res, next) => {
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        role: req.queryResult
+    });
+    
+});
