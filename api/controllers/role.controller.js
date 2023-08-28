@@ -24,3 +24,23 @@ export const createRole = errorWrapper(async(req, res, next) => {
     })
 
 });
+
+export const updateRole = errorWrapper(async(req, res, next) => {
+
+    const {roleName} = req.body;
+    const role = req.queryResult;
+
+    if(!roleName){
+        return next(new CustomError(400, Message.BlankInputs));
+    }
+
+    await role.update({roleName: capitalize(roleName)});
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.RoleUpdated
+    })
+
+});

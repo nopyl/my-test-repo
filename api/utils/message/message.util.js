@@ -28,6 +28,9 @@ class Message {
     static TwoFactorAuthNotEnabled = "Two factor authentication is not enabled";
     static TwoFactorAuthDisabled = "Two factor authentication has been successfully disabled";
     static RoleCreated = "Role has been successfully created";
+    static NullUuid = "UUID can not be null";
+    static RoleNotFound = "Role not found";
+    static RoleUpdated = "Role has been succesfully updated";
 }
 
 export default Message;
