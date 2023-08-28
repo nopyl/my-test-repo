@@ -2,6 +2,7 @@ import User from "../../models/User.model.js";
 import errorWrapper from "express-async-handler";
 import CustomError from "../../utils/error/CustomError.js";
 import Message from "../../utils/message/message.util.js";
+import Role from "../../models/Role.model.js";
 
 export const checkUserExists = errorWrapper(async(req, res, next) => {
 
@@ -22,6 +23,26 @@ export const checkUserExists = errorWrapper(async(req, res, next) => {
     }
 
     req.queryResult = user;
+
+    next();
+
+});
+
+export const checkRoleExists = errorWrapper(async(req, res, next) => {
+
+    const {uuid} = req.params;
+
+    if(!uuid){
+        return next(new CustomError(400, Message.NullUuid));
+    }
+
+    const role = await Role.findByPk(uuid);
+
+    if(!role){
+        return next(new CustomError(404, Message.RoleNotFound));
+    }
+
+    req.queryResult = role;
 
     next();
 
