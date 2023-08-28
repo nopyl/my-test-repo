@@ -44,3 +44,18 @@ export const updateRole = errorWrapper(async(req, res, next) => {
     })
 
 });
+
+export const deleteRole = errorWrapper(async(req, res, next) => {
+
+    const role = req.queryResult;
+
+    await role.destroy();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.RoleDeleted
+    });
+
+});

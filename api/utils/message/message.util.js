@@ -31,6 +31,7 @@ class Message {
     static NullUuid = "UUID can not be null";
     static RoleNotFound = "Role not found";
     static RoleUpdated = "Role has been succesfully updated";
+    static RoleDeleted = "Role has been successfully deleted";
 }
 
 export default Message;
