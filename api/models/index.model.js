@@ -1,13 +1,35 @@
+import db from "../services/database/service.database.js";
 import User from "./User.model.js";
 import Role from "./Role.model.js";
-import db from "../services/database/service.database.js";
+import Brand from "./Brand.model.js";
+import Product from "./Product.model.js";
+import Color from "./Color.model.js";
 
+//User & Role -> Many to Many
 User.belongsToMany(Role, { through: "UserRoles"} );
 Role.belongsToMany(User, { through: "UserRoles"} );
 
+//Brand & Product -> One to Many
+Brand.hasMany(Product, { foreignKey: "brandId" });
+Product.belongsTo(Brand);
+
+//Brand & User -> One to Many
+User.hasMany(Brand, { foreignKey: "userId" });
+Brand.belongsTo(User);
+
+//Color & User -> One to Many
+User.hasMany(Color, { foreignKey: "userId" });
+Color.belongsTo(User);
+
+//Color & Product -> Many to Many
+Product.belongsToMany(Color, { through: "ProductColors" });
+Color.belongsToMany(Product, { through: "ProductColors" });
 
 await db.sync();
 export {
     User,
-    Role
+    Role,
+    Product,
+    Brand,
+    Color,
 };
