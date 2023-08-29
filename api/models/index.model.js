@@ -10,15 +10,15 @@ User.belongsToMany(Role, { through: "UserRoles"} );
 Role.belongsToMany(User, { through: "UserRoles"} );
 
 //Brand & Product -> One to Many
-Brand.hasMany(Product, { foreignKey: "brandId" });
+Brand.hasMany(Product, { foreignKey: "brandUuid" });
 Product.belongsTo(Brand);
 
 //Brand & User -> One to Many
-User.hasMany(Brand, { foreignKey: "userId" });
+User.hasMany(Brand, { foreignKey: "userUuid" });
 Brand.belongsTo(User);
 
 //Color & User -> One to Many
-User.hasMany(Color, { foreignKey: "userId" });
+User.hasMany(Color, { foreignKey: "userUuid" });
 Color.belongsTo(User);
 
 //Color & Product -> Many to Many

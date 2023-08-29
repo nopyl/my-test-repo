@@ -13,7 +13,7 @@ const Color = db.define("Color", {
         allowNull: false,
         unique: true
     },
-    userId: {
+    userUuid: {
         type: DataTypes.UUID,
         allowNull: false,
     },

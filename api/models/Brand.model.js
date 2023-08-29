@@ -13,7 +13,7 @@ const Brand = db.define("Brand", {
         unique: true,
         allowNull: false
     },
-    userId: {
+    userUuid: {
         type: DataTypes.UUID,
         allowNull: false,
     },

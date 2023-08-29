@@ -8,7 +8,7 @@ const Product = db.define("Product", {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4
     },
-    brandId: {
+    brandUuid: {
         type: DataTypes.UUID,
         allowNull: false,
     },
