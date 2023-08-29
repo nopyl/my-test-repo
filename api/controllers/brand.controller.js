@@ -25,3 +25,26 @@ export const createBrand = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const updateBrand = errorWrapper(async(req, res, next) => {
+
+    const {brandName} = req.body;
+    const brand = req.queryResult;
+
+    if(!brandName){
+        return next(new CustomError(400, Message.BlankInputs));
+    }
+
+    await brand.update({
+        brandName: capitalize(brandName)
+    });
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.BrandUpdated
+    })
+
+
+});
