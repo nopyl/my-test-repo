@@ -1,5 +1,6 @@
 import crypto, { randomInt } from "crypto";
 import speakeasy from "speakeasy";
+import { SuccessResult } from "../result/SuccessResult.js";
 
 export const sendTokenToCookie = (user, res) => {
 
@@ -13,9 +14,7 @@ export const sendTokenToCookie = (user, res) => {
         maxAge: COOKIE_EXPIRES,
         httpOnly: NODE_ENV === "development" ? true : false
     })
-    .json({
-        success: true
-    });
+    .json(new SuccessResult());
 
 }
 

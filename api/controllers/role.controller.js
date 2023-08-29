@@ -3,6 +3,8 @@ import errorWrapper from "express-async-handler";
 import CustomError from "../utils/error/CustomError.js";
 import Message from "../utils/message/message.util.js";
 import { capitalize } from "../utils/helpers/input.helper.js";
+import { SuccessResult } from "../utils/result/SuccessResult.js";
+import { SuccessDataResult } from "../utils/result/SuccessDataResult.js";
 
 export const createRole = errorWrapper(async(req, res, next) => {
 
@@ -18,10 +20,7 @@ export const createRole = errorWrapper(async(req, res, next) => {
 
     return res
     .status(201)
-    .json({
-        success: true,
-        message: Message.RoleCreated
-    })
+    .json(new SuccessResult(Message.RoleCreated));
 
 });
 
@@ -38,10 +37,7 @@ export const updateRole = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.RoleUpdated
-    })
+    .json(new SuccessResult(Message.RoleUpdated));
 
 });
 
@@ -53,10 +49,7 @@ export const deleteRole = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.RoleDeleted
-    });
+    .json(new SuccessResult(Message.RoleDeleted));
 
 });
 
@@ -66,10 +59,7 @@ export const getAllRoles = errorWrapper(async(req, res, next) => {
     
     return res
     .status(200)
-    .json({
-        success: true,
-        roles: roles
-    });
+    .json(new SuccessDataResult(null, roles));
 
 });
 
@@ -77,9 +67,6 @@ export const getRoleById = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        role: req.queryResult
-    });
+    .json(new SuccessDataResult(null, req.queryResult));
     
 });

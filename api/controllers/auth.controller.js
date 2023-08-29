@@ -10,6 +10,8 @@ import { sendPhoneVerificationCode, phoneCodeValidation } from "../services/sms/
 import speakeasy from "speakeasy";
 import qrcode from "qrcode";
 import Role from "../models/Role.model.js";
+import { SuccessResult } from "../utils/result/SuccessResult.js";
+import { SuccessDataResult } from "../utils/result/SuccessDataResult.js";
 
 export const signUp = errorWrapper(async(req, res, next) => {
 
@@ -79,10 +81,7 @@ export const sendEmailVerificationEmail = errorWrapper(async(req, res, next) => 
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.EmailVerificationLinkSent
-    });
+    .json(new SuccessResult(Message.EmailVerificationLinkSent));
 
 });
 
@@ -116,10 +115,7 @@ export const verifyEmail = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.EmailVerified
-    });
+    .json(new SuccessResult(Message.EmailVerified));
 
 });
 
@@ -156,10 +152,7 @@ export const changeEmail = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.EmailVerificationLinkSent
-    });
+    .json(new SuccessResult(Message.EmailVerificationLinkSent));
 
 });
 
@@ -195,10 +188,7 @@ export const passwordChange = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.PasswordChanged
-    });
+    .json(new SuccessResult(Message.PasswordChanged));
 
 });
 
@@ -210,10 +200,7 @@ export const forgotPassword = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.ResetPasswordLinkSent
-    });
+    .json(new SuccessResult(Message.ResetPasswordLinkSent));
 
 });
 
@@ -262,10 +249,7 @@ export const resetPassword = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.PasswordChanged
-    });
+    .json(new SuccessResult(Message.PasswordChanged));
     
 });
 
@@ -285,10 +269,7 @@ export const addPhoneNumber = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.PhoneVerificationCodeSent
-    })
+    .json(new SuccessResult(Message.PhoneVerificationCodeSent));
 
 });
 
@@ -300,10 +281,7 @@ export const sendPhoneVerification = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.PhoneVerificationCodeSent
-    });
+    .json(new SuccessResult(Message.PhoneVerificationCodeSent));
 
 });
 
@@ -327,11 +305,7 @@ export const verifyPhone = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.PhoneNumberVerified
-    });
-
+    .json(new SuccessResult(Message.PhoneNumberVerified));
 
 });
 
@@ -349,9 +323,7 @@ export const validatePhoneCode = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true
-    });
+    .json(new SuccessResult());
 
 });
 
@@ -370,11 +342,10 @@ export const enableTwoFactorAuth = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
+    .json(new SuccessDataResult(null, {
         qrCode: qrCode,
         secretKey: twoFactorAuthSecretKey.base32
-    });
+    }));
 
 });
 
@@ -398,11 +369,7 @@ export const verifyTwoFactorAuth = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.TwoFactorAuthEnabled
-    });
-
+    .json(new SuccessResult(Message.TwoFactorAuthEnabled));
 
 });
 
@@ -448,9 +415,6 @@ export const disableTwoFactorAuth = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.TwoFactorAuthDisabled
-    });
+    .json(new SuccessResult(Message.TwoFactorAuthDisabled));
 
 });

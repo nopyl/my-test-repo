@@ -3,6 +3,8 @@ import errorWrapper from "express-async-handler";
 import CustomError from "../utils/error/CustomError.js";
 import Message from "../utils/message/message.util.js";
 import { capitalize } from "../utils/helpers/input.helper.js";
+import { SuccessResult } from "../utils/result/SuccessResult.js";
+import { SuccessDataResult } from "../utils/result/SuccessDataResult.js";
 
 export const createBrand = errorWrapper(async(req, res, next) => {
 
@@ -19,10 +21,7 @@ export const createBrand = errorWrapper(async(req, res, next) => {
 
     return res
     .status(201)
-    .json({
-        success: true,
-        message: Message.BrandCreated
-    });
+    .json(new SuccessResult(Message.BrandCreated));
 
 });
 
@@ -41,11 +40,7 @@ export const updateBrand = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.BrandUpdated
-    })
-
+    .json(new SuccessResult(Message.BrandUpdated));
 
 });
 
@@ -57,10 +52,7 @@ export const deleteBrand = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.BrandDeleted
-    });
+    .json(new SuccessResult(Message.BrandDeleted));
 
 });
 
@@ -70,10 +62,7 @@ export const getBrandById = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        brand: brand
-    });
+    .json(new SuccessDataResult(null, brand))
 
 });
 
@@ -83,9 +72,6 @@ export const getAllBrands = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        brands: brands
-    });
+    .json(new SuccessDataResult(null, brands));
 
 });

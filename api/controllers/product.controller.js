@@ -3,6 +3,8 @@ import errorWrapper from "express-async-handler";
 import { validateInputs } from "../utils/helpers/input.helper.js";
 import CustomError from "../utils/error/CustomError.js";
 import Message from "../utils/message/message.util.js";
+import { SuccessResult } from "../utils/result/SuccessResult.js";
+import { SuccessDataResult } from "../utils/result/SuccessDataResult.js";
 
 export const createProduct = errorWrapper(async(req, res, next) => {
 
@@ -30,11 +32,7 @@ export const createProduct = errorWrapper(async(req, res, next) => {
 
     return res
     .status(201)
-    .json({
-        success: true,
-        product: product,
-        message: Message.ProductCreated
-    });
+    .json(new SuccessDataResult(Message.ProductCreated, product));
 
 });
 
@@ -47,11 +45,7 @@ export const updateProduct = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        product: updatedProduct,
-        message: Message.ProductUpdated
-    });
+    .json(new SuccessDataResult(Message.ProductUpdated, updatedProduct));
 
 });
 
@@ -63,10 +57,7 @@ export const deleteProduct = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        message: Message.ProductDeleted
-    })
+    .json(new SuccessResult(Message.ProductDeleted));
 
 });
 
@@ -76,10 +67,7 @@ export const getProductById = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        product: product
-    });
+    .json(new SuccessDataResult(null, product));
 
 });
 
@@ -89,9 +77,6 @@ export const getAllProducts = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json({
-        success: true,
-        products: products
-    });
+    .json(new SuccessDataResult(null, products));
 
 });
