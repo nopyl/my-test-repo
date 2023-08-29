@@ -15,17 +15,38 @@ export const getAdminAccess = errorWrapper(async(req, res, next) => {
         }
     });
 
-    console.log(user.Roles);
-
     for (let i = 0; i < user.Roles.length; i++) {
 
         if(user.Roles[i].dataValues.roleName === "Admin"){
-            console.log(user.Roles[i].dataValues.roleName)
             return next();
         }
 
     }
 
     return next(new CustomError(403, Message.Unauthorized));
+
+});
+
+export const getStaffAccess = errorWrapper(async(req, res, next) => {
+
+    const user = await User.findOne({
+        where: {
+            uuid: req.user.uuid
+        },
+        include: {
+            model: Role,
+        }
+    });
+
+    for (let i = 0; i < user.Roles.length; i++) {
+
+        if(user.Roles[i].dataValues.roleName === "Staff"){
+            return next();
+        }
+
+    }
+
+    return next(new CustomError(403, Message.Unauthorized));
+
 
 });
