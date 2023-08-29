@@ -35,6 +35,7 @@ class Message {
     static ColorCreated = "Color has been successfully created";
     static ColorNotFound = "Color not found";
     static ColorUpdated = "Color has been successfully updated";
+    static ColorDeleted = "Color has been successfully deleted";
 }
 
 export default Message;

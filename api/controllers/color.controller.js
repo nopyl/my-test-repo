@@ -47,3 +47,18 @@ export const updateColor = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const deleteColor = errorWrapper(async(req, res, next) => {
+
+    const color = req.queryResult;
+
+    await color.destroy();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.ColorDeleted
+    });
+
+});
