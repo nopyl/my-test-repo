@@ -63,3 +63,16 @@ export const deleteBrand = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const getBrandById = errorWrapper(async(req, res, next) => {
+
+    const brand = req.queryResult;
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        brand: brand
+    });
+
+});
