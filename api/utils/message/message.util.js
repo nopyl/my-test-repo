@@ -40,6 +40,7 @@ class Message {
     static BrandNotFound = "Brand not found";
     static BrandUpdated = "Brand has been successfully updated";
     static BrandDeleted = "Brand has been successfully deleted";
+    static ProductCreated = "Product has been successfully created";
 }
 
 export default Message;
