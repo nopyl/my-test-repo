@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import db from "../services/database/service.database.js";
+import slugify from "slugify";
+import Brand from "./Brand.model.js";
 
 const Product = db.define("Product", {
 
@@ -28,6 +30,13 @@ const Product = db.define("Product", {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    userUuid: {
+        type: DataTypes.UUID,
+        allowNull: false
+    },
+    slug: {
+        type: DataTypes.STRING
+    },
     isVisible: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
@@ -39,6 +48,26 @@ const Product = db.define("Product", {
 
 
 }, { timestamps: false });
+
+Product.addHook("beforeSave", async(product) => {
+
+    if(product.changed("productName")){
+
+        const brand = await Brand.findOne({
+            where: {
+                uuid: product.brandUuid
+            },
+            attributes: ["uuid", "brandName"]
+        });
+        
+        product.slug = slugify([brand.brandName, ' ', product.productName].join(''), {
+            lower: true,
+            replacement: "-",
+        });
+
+    }
+
+});
 
 await Product.sync();
 export default Product;
