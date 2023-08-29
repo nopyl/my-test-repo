@@ -25,3 +25,26 @@ export const createCategory = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const updateCategory = errorWrapper(async(req, res, next) => {
+
+    const {categoryName} = req.body;
+    const category = req.queryResult;
+
+    if(!categoryName){
+        return next(new CustomError(400, Message.BlankInputs));
+    }
+
+    await category.update({
+        categoryName: categoryName
+    });
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.CategoryUpdated 
+    });
+
+
+});
