@@ -62,3 +62,16 @@ export const deleteColor = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const getColorById = errorWrapper(async(req, res, next) => {
+
+    const color = req.queryResult;
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        color: color
+    });
+
+});
