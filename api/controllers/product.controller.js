@@ -37,3 +37,20 @@ export const createProduct = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const updateProduct = errorWrapper(async(req, res, next) => {
+
+    const updateInformations = req.body;
+    const product = req.queryResult;
+
+    const updatedProduct = await product.update(updateInformations);
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        product: updatedProduct,
+        message: Message.ProductUpdated
+    });
+
+});
