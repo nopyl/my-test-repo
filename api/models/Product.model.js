@@ -69,5 +69,17 @@ Product.addHook("beforeSave", async(product) => {
 
 });
 
+Product.addHook("beforeSave", (product) => {
+
+    if(product.changed("quantityInStock")){
+
+        if(product.quantityInStock === 0){
+            
+            product.isVisible = false;
+        }
+    }
+
+});
+
 await Product.sync();
 export default Product;
