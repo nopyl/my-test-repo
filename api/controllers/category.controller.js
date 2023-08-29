@@ -63,3 +63,16 @@ export const deleteCategory = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const getCategoryById = errorWrapper(async(req, res, next) => {
+
+    const category = req.queryResult;
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        category: category
+    });
+    
+});

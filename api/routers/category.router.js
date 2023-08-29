@@ -10,3 +10,4 @@ categoryRouter.use(passport.authenticate("jwt", {session: false}));
 categoryRouter.post("/create", createCategory);
 categoryRouter.patch("/update/:uuid", checkCategoryExists, updateCategory);
 categoryRouter.delete("/delete/:uuid", checkCategoryExists, deleteCategory);
+categoryRouter.get("/:uuid", checkCategoryExists, getCategoryById);
