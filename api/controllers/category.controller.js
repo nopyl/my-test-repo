@@ -48,3 +48,18 @@ export const updateCategory = errorWrapper(async(req, res, next) => {
 
 
 });
+
+export const deleteCategory = errorWrapper(async(req, res, next) => {
+
+    const category = req.queryResult;
+
+    await category.destroy();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.CategoryDeleted
+    });
+
+});
