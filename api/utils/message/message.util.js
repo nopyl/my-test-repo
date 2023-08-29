@@ -33,6 +33,8 @@ class Message {
     static RoleUpdated = "Role has been succesfully updated";
     static RoleDeleted = "Role has been successfully deleted";
     static ColorCreated = "Color has been successfully created";
+    static ColorNotFound = "Color not found";
+    static ColorUpdated = "Color has been successfully updated";
 }
 
 export default Message;

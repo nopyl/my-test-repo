@@ -25,3 +25,25 @@ export const createColor = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const updateColor = errorWrapper(async(req, res, next) => {
+
+    const {colorName} = req.body;
+    const color = req.queryResult;
+
+    if(!colorName){
+        return next(new CustomError(400, Message.BlankInputs));
+    }
+
+    await color.update({
+        colorName: capitalize(colorName)
+    });
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.ColorUpdated
+    });
+
+});
