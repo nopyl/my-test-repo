@@ -76,3 +76,16 @@ export const getBrandById = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const getAllBrands = errorWrapper(async(req, res, next) => {
+
+    const brands = await Brand.findAll();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        brands: brands
+    });
+
+});
