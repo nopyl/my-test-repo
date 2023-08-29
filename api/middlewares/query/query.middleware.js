@@ -6,6 +6,7 @@ import Role from "../../models/Role.model.js";
 import Color from "../../models/Color.model.js";
 import Brand from "../../models/Brand.model.js";
 import Product from "../../models/Product.model.js";
+import Category from "../../models/Category.model.js";
 
 export const checkUserExists = errorWrapper(async(req, res, next) => {
 
@@ -110,6 +111,29 @@ export const checkProductExists = errorWrapper(async(req, res, next) => {
     }
 
     req.queryResult = product;
+    next();
+
+});
+
+export const checkCategoryExists = errorWrapper(async(req, res, next) => {
+
+    const {uuid} = req.params;
+    
+    if(!uuid){
+        return next(new CustomError(400, Message.NullUuid));
+    }
+
+    const category = await Category.findOne({
+        where: {
+            uuid: uuid
+        }
+    });
+
+    if(!category){
+        return next(new CustomError(404, Message.CategoryNotFound));
+    }
+
+    req.queryResult = category;
     next();
 
 });
