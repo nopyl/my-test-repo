@@ -14,7 +14,7 @@ export const createColor = errorWrapper(async(req, res, next) => {
 
     await Color.create({
         colorName: capitalize(colorName),
-        userId: req.user.uuid
+        userUuid: req.user.uuid
     });
 
     return res
@@ -72,6 +72,19 @@ export const getColorById = errorWrapper(async(req, res, next) => {
     .json({
         success: true,
         color: color
+    });
+
+});
+
+export const getAllColors = errorWrapper(async(req, res, next) => {
+
+    const colors = await Color.findAll();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        colors: colors
     });
 
 });
