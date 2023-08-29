@@ -5,6 +5,7 @@ import Message from "../../utils/message/message.util.js";
 import Role from "../../models/Role.model.js";
 import Color from "../../models/Color.model.js";
 import Brand from "../../models/Brand.model.js";
+import Product from "../../models/Product.model.js";
 
 export const checkUserExists = errorWrapper(async(req, res, next) => {
 
@@ -86,6 +87,29 @@ export const checkBrandExists = errorWrapper(async(req, res, next) => {
 
     req.queryResult = brand;
 
+    next();
+
+});
+
+export const checkProductExists = errorWrapper(async(req, res, next) => {
+
+    const {uuid} = req.params;
+
+    if(!uuid){
+        return next(new CustomError(400, Message.NullUuid));
+    }
+
+    const product = await Product.findOne({
+        where: {
+            uuid: uuid
+        }
+    });
+
+    if(!product){
+        return next(new CustomError(404, Message.ProductNotFound));
+    }
+
+    req.queryResult = product;
     next();
 
 });
