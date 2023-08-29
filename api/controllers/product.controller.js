@@ -82,3 +82,16 @@ export const getProductById = errorWrapper(async(req, res, next) => {
     });
 
 });
+
+export const getAllProducts = errorWrapper(async(req, res, next) => {
+    
+    const products = await Product.findAll();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        products: products
+    });
+
+});
