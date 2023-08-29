@@ -36,7 +36,7 @@ export const updateCategory = errorWrapper(async(req, res, next) => {
     }
 
     await category.update({
-        categoryName: categoryName
+        categoryName: capitalize(categoryName)
     });
 
     return res
@@ -75,4 +75,17 @@ export const getCategoryById = errorWrapper(async(req, res, next) => {
         category: category
     });
     
+});
+
+export const getAllCategories = errorWrapper(async(req, res, next) => {
+
+    const categories = await Category.findAll();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        categories: categories
+    });
+
 });
