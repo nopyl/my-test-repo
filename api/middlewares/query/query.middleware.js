@@ -4,6 +4,7 @@ import CustomError from "../../utils/error/CustomError.js";
 import Message from "../../utils/message/message.util.js";
 import Role from "../../models/Role.model.js";
 import Color from "../../models/Color.model.js";
+import Brand from "../../models/Brand.model.js";
 
 export const checkUserExists = errorWrapper(async(req, res, next) => {
 
@@ -64,6 +65,26 @@ export const checkColorExists = errorWrapper(async(req, res, next) => {
     }
 
     req.queryResult = color;
+
+    next();
+
+});
+
+export const checkBrandExists = errorWrapper(async(req, res, next) => {
+
+    const {uuid} = req.params;
+
+    if(!uuid){
+        return next(new CustomError(400, Message.NullUuid));
+    }
+    
+    const brand = await Brand.findByPk(uuid);
+
+    if(!brand){
+        return next(new CustomError(404, Message.ColorNotFound));
+    }
+
+    req.queryResult = brand;
 
     next();
 
