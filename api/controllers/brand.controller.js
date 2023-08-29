@@ -48,3 +48,18 @@ export const updateBrand = errorWrapper(async(req, res, next) => {
 
 
 });
+
+export const deleteBrand = errorWrapper(async(req, res, next) => {
+
+    const brand = req.queryResult;
+
+    await brand.destroy();
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        message: Message.BrandDeleted
+    });
+
+});
