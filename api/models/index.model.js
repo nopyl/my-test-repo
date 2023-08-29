@@ -4,6 +4,8 @@ import Role from "./Role.model.js";
 import Brand from "./Brand.model.js";
 import Product from "./Product.model.js";
 import Color from "./Color.model.js";
+import Category from "./Category.model.js";
+
 
 //User & Role -> Many to Many
 User.belongsToMany(Role, { through: "UserRoles"} );
@@ -25,6 +27,10 @@ Color.belongsTo(User);
 Product.belongsToMany(Color, { through: "ProductColors" });
 Color.belongsToMany(Product, { through: "ProductColors" });
 
+//Category & User -> One to Many
+User.hasMany(Category, { foreignKey: "userUuid"});
+Category.belongsTo(User);
+
 await db.sync();
 export {
     User,
@@ -32,4 +38,5 @@ export {
     Product,
     Brand,
     Color,
+    Category
 };
