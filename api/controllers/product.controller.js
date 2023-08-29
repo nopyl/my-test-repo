@@ -69,3 +69,16 @@ export const deleteProduct = errorWrapper(async(req, res, next) => {
     })
 
 });
+
+export const getProductById = errorWrapper(async(req, res, next) => {
+
+    const product = req.queryResult;
+
+    return res
+    .status(200)
+    .json({
+        success: true,
+        product: product
+    });
+
+});
