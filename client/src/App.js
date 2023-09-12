@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import { SignUp } from './Components/Pages/Auth/SignUp';
 import { Layout } from './Components/Layout';
 import { SignIn } from './Components/Pages/Auth/SignIn';
+import { Index } from './Components/Index';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
 
       <Route path='/' element={<Layout />}>
 
+      <Route index element={<Index />}/>
 
         {/* Auth Routes */}
         <Route path="/auth">
