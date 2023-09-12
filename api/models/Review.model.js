@@ -14,7 +14,6 @@ const Review = db.define("Review", {
     },
     message: {
         type: DataTypes.STRING,
-        allowNull: false
     },
     userUuid: {
         type: DataTypes.UUID,
