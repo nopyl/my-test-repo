@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import db from "../services/database/service.database.js";
+import Message from "../utils/message/message.util.js";
 
 const Review = db.define("Review", {
 
@@ -10,10 +11,24 @@ const Review = db.define("Review", {
     },
     starCount: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            min: {
+                args: 1,
+                msg: Message.ReviewStarValidationError
+            },
+            max: {
+                args: 5,
+                msg: Message.ReviewStarValidationError
+            }
+        }
     },
     message: {
         type: DataTypes.STRING,
+    },
+    productUuid: {
+        type: DataTypes.UUID,
+        allowNull: false,
     },
     userUuid: {
         type: DataTypes.UUID,

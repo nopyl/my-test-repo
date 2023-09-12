@@ -36,6 +36,10 @@ Category.belongsTo(User);
 User.hasMany(Review, {foreignKey: "userUuid"});
 Review.belongsTo(User);
 
+//Review & Product -> Many to Many
+Product.belongsToMany(Review, { through: "ProductReviews" });
+Review.belongsToMany(Product, { through: "ProductReviews" });
+
 await db.sync();
 export {
     User,
