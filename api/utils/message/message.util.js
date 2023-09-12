@@ -48,6 +48,9 @@ class Message {
     static CategoryNotFound = "Category not found";
     static CategoryUpdated = "Category has been successfully updated";
     static CategoryDeleted = "Category has been successfully deleted";
+    static ReviewStarValidationError = "Review star must be between 1 and 5";
+    static ReviewCreated = "Review has been successfully started";
+    static ReviewAlreadyCreated = "You have already created a review";
 }
 
 export default Message;
