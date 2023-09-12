@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import { Button } from "../../../Button";
 import { api } from "../../../../Services/axios/axios.service";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Message } from "../../../../Utils/Message/Message";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -10,10 +14,16 @@ export const SignUp = () => {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
+  const navigate = useNavigate();
+
   const signUp = async (e) => {
     
     e.preventDefault();
 
+
+    if(!email || !password || !gender || !dateOfBirth){
+      return toast.warning(Message.NullInputException);
+    }
 
     try{
       
@@ -25,12 +35,12 @@ export const SignUp = () => {
       });
 
       if(data.success){
-          console.log("Register Successfull");
+        navigate("/");
       }
 
     }
     catch(err){
-      console.log(err);
+      return toast.error(err.response.data.message);
     }
 
   };
@@ -51,6 +61,7 @@ export const SignUp = () => {
               className="form-control shadow-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -64,6 +75,7 @@ export const SignUp = () => {
               className="form-control shadow-none"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
               />
             <div class="input-group-append">
               <button
@@ -87,6 +99,7 @@ export const SignUp = () => {
               id="dateOfBirth"
               value={dateOfBirth}
               onChange={(e) => setDateOfBirth(e.target.value)}
+              required
             />
           </div>
 
@@ -95,6 +108,7 @@ export const SignUp = () => {
             <select
               className="form-select shadow-none"
               onChange={(e) => setGender(e.target.value)}
+              required
             >
               <option selected>Select Gender</option>
               <option value="Male">Male</option>
@@ -119,6 +133,8 @@ export const SignUp = () => {
             className="btn text-light mt-3"
           />
         </form>
+
+        <ToastContainer />
       </div>
     </>
   );
