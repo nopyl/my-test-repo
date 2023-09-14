@@ -13,6 +13,10 @@ const Coupon = db.define("Coupon", {
         allowNull: false,
         unique: true
     },
+    discountRate: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     communityLimit: {
         type: DataTypes.INTEGER,
         allowNull: false

@@ -9,15 +9,16 @@ import { SuccessDataResult } from "../utils/result/SuccessDataResult.js";
 
 export const createCoupon = errorWrapper(async(req, res, next) => {
 
-    const {code, communityLimit, expireDate, categories} = req.body;
+    const {code, discountRate, communityLimit, expireDate, categories} = req.body;
 
-    if(!validateInputs(code, communityLimit, expireDate)){
+    if(!validateInputs(code, discountRate, communityLimit, expireDate)){
 
         return next(new CustomError(400, Message.BlankInputs));
     }
 
     const coupon = await Coupon.create({
         code: code.toUpperCase(),
+        discountRate: discountRate,
         communityLimit: communityLimit,
         expireDate: expireDate
     });
@@ -51,10 +52,10 @@ export const createCoupon = errorWrapper(async(req, res, next) => {
 
 export const updateCoupon = errorWrapper(async(req, res, next) => {
 
-    const {code, communityLimit, expireDate, categories} = req.body;
+    const {code, discountRate, communityLimit , expireDate, categories} = req.body;
     const coupon = req.queryResult;
 
-    if(!code && !communityLimit && !expireDate && !categories){
+    if(!code && !discountRate && !communityLimit && !expireDate && !categories){
         return next(new CustomError(400, Message.BlankInputs));
     }
 
