@@ -53,6 +53,7 @@ class Message {
     static ReviewAlreadyCreated = "You have already created a review";
     static ReviewNotFound = "Review not found";
     static ReviewUpdated = "Review has been successfully updated";
+    static ReviewDeleted = "Review has been successully deleted";
 }
 
 export default Message;

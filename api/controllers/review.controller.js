@@ -55,3 +55,15 @@ export const updateReview = errorWrapper(async(req, res, next) => {
     .json(new SuccessResult(Message.ReviewUpdated));
 
 });
+
+export const deleteReview = errorWrapper(async(req, res, next) => {
+
+    const review = req.queryResult;
+
+    await review.destroy();
+
+    return res
+    .status(200)
+    .json(new SuccessResult(Message.ReviewDeleted));
+
+});
