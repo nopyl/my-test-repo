@@ -59,6 +59,8 @@ class Message {
     static CouponUpdated = "Coupon has been succesfully updated";
     static CouponDeleted = "Coupon has been successfully deleted";
     static AddressCreated = "Address has been successfully created";
+    static AddressNotFound = "Address not found";
+    static AddressUpdated = "Address has been successfully updated";
 }
 
 export default Message;

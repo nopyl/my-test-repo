@@ -31,3 +31,30 @@ export const createAddress = errorWrapper(async(req, res, next) => {
 
 
 });
+
+export const updateAddress = errorWrapper(async(req, res, next) => {
+
+    const {title, city, town, street, buildingNumber, flatNumber, details} = req.body;
+    const address = req.queryResult;
+    
+    if(!title && !city && !town && !street && !buildingNumber && !flatNumber && !details){                                                  
+        //We need some information to update address and If there is no send information we'll throw error.
+        return next(new CustomError(400, Message.BlankInputs));
+    };
+
+    await address.update({
+        title, 
+        city,
+        town,
+        street,
+        buildingNumber,
+        flatNumber,
+        details
+    });
+
+    return res
+    .status(200)
+    .json(new SuccessResult(Message.AddressUpdated))
+
+
+});
