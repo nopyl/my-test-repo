@@ -16,7 +16,7 @@ const CreditCard = db.define("CreditCard", {
         type: DataTypes.STRING(16),
         allowNull: false,
         validate: {
-            isCreditCard: true
+            is: /^4[0-9]{12}(?:[0-9]{3})?$/
         }
     },
     expireDate: {
