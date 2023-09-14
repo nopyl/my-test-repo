@@ -1,6 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
-import { createCreditCard, updateCreditCard } from "../controllers/creditCard.controller.js";
+import { createCreditCard, updateCreditCard, deleteCreditCard } from "../controllers/creditCard.controller.js";
 import { checkCreditCardExists } from "../middlewares/query/query.middleware.js";
 import { getCreditCardOwnerAccess } from "../middlewares/auth/auth.middleware.js";
 
@@ -12,4 +12,5 @@ creditCardRouter.use(isAuth);
 
 
 creditCardRouter.post("/create", createCreditCard);
-creditCardRouter.patch("/:uuid/update", checkCreditCardExists, getCreditCardOwnerAccess, updateCreditCard);
+creditCardRouter.patch("/:uuid/update", [checkCreditCardExists, getCreditCardOwnerAccess], updateCreditCard);
+creditCardRouter.delete("/:uuid/delete", [checkCreditCardExists, getCreditCardOwnerAccess], deleteCreditCard);

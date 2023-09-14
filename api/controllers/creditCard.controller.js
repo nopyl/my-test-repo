@@ -45,3 +45,15 @@ export const updateCreditCard = errorWrapper(async(req, res, next) => {
     .json(new SuccessResult(Message.CreditCardUpdated));
 
 });
+
+export const deleteCreditCard = errorWrapper(async(req, res, next) => {
+
+    const creditCard = req.queryResult;
+
+    await creditCard.destroy();
+
+    return res
+    .status(200)
+    .json( new SuccessResult(Message.CreditCardDeleted));
+
+});

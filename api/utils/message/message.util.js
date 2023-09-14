@@ -64,6 +64,7 @@ class Message {
     static AddressDeleted = "Address has been successfully deleted";
     static CreditCardNotFound = "Credit Card not found";
     static CreditCardUpdated = "Credit card has been successfully updated";
+    static CreditCardDeleted = "Credit card has been successfully deleted";
 }
 
 export default Message;
