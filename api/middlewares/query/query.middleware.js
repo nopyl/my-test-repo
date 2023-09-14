@@ -9,6 +9,7 @@ import Product from "../../models/Product.model.js";
 import Category from "../../models/Category.model.js";
 import Review from "../../models/Review.model.js";
 import Coupon from "../../models/Coupon.model.js";
+import Address from "../../models/Address.model.js";
 
 export const checkUserExists = errorWrapper(async(req, res, next) => {
 
@@ -183,6 +184,26 @@ export const checkCouponExists = errorWrapper(async(req, res, next) => {
     }
 
     req.queryResult = coupon;
+
+    next();
+
+});
+
+export const checkAddressExists = errorWrapper(async(req, res, next) => {
+
+    const {uuid} = req.params;
+
+    const address = await Address.findOne({
+        where: {
+            uuid: uuid,
+        }
+    });
+
+    if(!address){
+        return next(new CustomError(404, Message.AddressNotFound));
+    }
+
+    req.queryResult = address;
 
     next();
 
