@@ -92,3 +92,13 @@ export const getCouponById = errorWrapper(async(req, res, next) => {
     .json(new SuccessDataResult(null, coupon));
 
 });
+
+export const getAllCoupons = errorWrapper(async(req, res, next) => {
+
+    const coupons = await Coupon.findAll();
+    
+    return res
+    .status(200)
+    .json(new SuccessDataResult(null, coupons));
+    
+});
