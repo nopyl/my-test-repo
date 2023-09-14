@@ -5,6 +5,7 @@ import CustomError from "../utils/error/CustomError.js";
 import Message from "../utils/message/message.util.js";
 import { SuccessResult } from "../utils/result/SuccessResult.js";
 import Category from "../models/Category.model.js";
+import { SuccessDataResult } from "../utils/result/SuccessDataResult.js";
 
 export const createCoupon = errorWrapper(async(req, res, next) => {
 
@@ -79,5 +80,15 @@ export const deleteCoupon = errorWrapper(async(req, res, next) => {
     return res
     .status(200)
     .json(new SuccessResult(Message.CouponDeleted));
+
+});
+
+export const getCouponById = errorWrapper(async(req, res, next) => {
+
+    const coupon = req.queryResult;
+
+    return res
+    .status(200)
+    .json(new SuccessDataResult(null, coupon));
 
 });

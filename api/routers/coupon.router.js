@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import { getAdminAccess } from "../middlewares/auth/auth.middleware.js"
-import { createCoupon, deleteCoupon, updateCoupon } from "../controllers/coupon.controller.js";
+import { createCoupon, deleteCoupon, updateCoupon, getCouponById } from "../controllers/coupon.controller.js";
 import { checkCouponExists } from "../middlewares/query/query.middleware.js";
 
 export const couponRouter = Router();
@@ -13,3 +13,4 @@ couponRouter.use([isAuth, getAdminAccess]);
 couponRouter.post("/create", createCoupon);
 couponRouter.patch("/:uuid/update", checkCouponExists, updateCoupon);
 couponRouter.delete("/:uuid/delete", checkCouponExists, deleteCoupon);
+couponRouter.get("/:uuid", checkCouponExists, getCouponById);
