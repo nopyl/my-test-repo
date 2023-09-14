@@ -62,3 +62,15 @@ export const getReviewOwnerAccess = errorWrapper(async(req, res, next) => {
     return next();
 
 });
+
+export const getAddressOwnerAccess = errorWrapper(async(req, res, next) => {
+
+    const address = req.queryResult;
+
+    if(address.userUuid !== req.user.uuid){
+        return next(new CustomError(403, Message.Unauthorized));
+    }
+
+    next();
+
+});
