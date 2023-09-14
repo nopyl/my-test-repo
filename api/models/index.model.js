@@ -6,6 +6,7 @@ import Product from "./Product.model.js";
 import Color from "./Color.model.js";
 import Category from "./Category.model.js";
 import Review from "./Review.model.js";
+import Coupon from "./Coupon.model.js";
 
 
 //User & Role -> Many to Many
@@ -40,6 +41,10 @@ Review.belongsTo(User);
 Product.belongsToMany(Review, { through: "ProductReviews" });
 Review.belongsToMany(Product, { through: "ProductReviews" });
 
+//Coupon & Category -> Many to Many
+Coupon.belongsToMany(Category, { through: "CouponCategories"});
+Category.belongsToMany(Coupon, { through: "CouponCategories"});
+
 await db.sync();
 export {
     User,
@@ -48,5 +53,6 @@ export {
     Brand,
     Color,
     Category,
-    Review
+    Review,
+    Coupon
 };
