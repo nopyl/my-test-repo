@@ -7,6 +7,7 @@ import Color from "../../models/Color.model.js";
 import Brand from "../../models/Brand.model.js";
 import Product from "../../models/Product.model.js";
 import Category from "../../models/Category.model.js";
+import Review from "../../models/Review.model.js";
 
 export const checkUserExists = errorWrapper(async(req, res, next) => {
 
@@ -136,4 +137,28 @@ export const checkCategoryExists = errorWrapper(async(req, res, next) => {
     req.queryResult = category;
     next();
 
+});
+
+export const checkReviewExists = errorWrapper(async(req, res, next) => {
+
+    const {uuid, reviewUuid} = req.params;
+
+    if(!uuid && !reviewUuid){
+        return next(new CustomError(400, Message.NullUuid));
+    }
+
+    const review = await Review.findOne({
+       where: {
+        uuid: reviewUuid,
+        productUuid: uuid
+       },
+    });
+
+    if(!review){
+        return next(new CustomError(404, Message.ReviewNotFound));
+    }
+
+    req.queryResult = review;
+    
+    next();
 });
