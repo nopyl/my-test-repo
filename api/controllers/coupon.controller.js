@@ -22,7 +22,7 @@ export const createCoupon = errorWrapper(async(req, res, next) => {
     });
 
     if(categories) {
-        
+
         //relation with specific categories
         await coupon.addCategory(categories);
 
@@ -45,5 +45,27 @@ export const createCoupon = errorWrapper(async(req, res, next) => {
     return res
     .status(200)
     .json(new SuccessResult(Message.CouponCreated));
+
+});
+
+export const updateCoupon = errorWrapper(async(req, res, next) => {
+
+    const {code, communityLimit, expireDate, categories} = req.body;
+    const coupon = req.queryParams;
+
+    if(!code && !communityLimit && !expireDate && !categories){
+        return next(new CustomError(400, Message.BlankInputs));
+    }
+
+    //Will be refactored
+    // if(categories){
+    //     await coupon.removeCategories();
+    // }
+
+    await coupon.update({code, communityLimit, expireDate});
+
+    return res
+    .status(200)
+    .json(new SuccessResult(Message.CouponUpdated));
 
 });

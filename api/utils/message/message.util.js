@@ -55,6 +55,8 @@ class Message {
     static ReviewUpdated = "Review has been successfully updated";
     static ReviewDeleted = "Review has been successully deleted";
     static CouponCreated = "Coupon has been successfully created";
+    static CouponNotFound = "Coupon not found";
+    static CouponUpdated = "Coupon has been succesfully updated";
 }
 
 export default Message;
