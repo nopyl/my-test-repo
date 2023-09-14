@@ -3,6 +3,8 @@ import errorWrapper from "express-async-handler";
 import CustomError from "../utils/error/CustomError.js";
 import Message from "../utils/message/message.util.js";
 import { SuccessResult } from "../utils/result/SuccessResult.js";
+import { response } from "express";
+import { SuccessDataResult } from "../utils/result/SuccessDataResult.js";
 
 export const createReview = errorWrapper(async(req, res, next) => {
 
@@ -65,5 +67,15 @@ export const deleteReview = errorWrapper(async(req, res, next) => {
     return res
     .status(200)
     .json(new SuccessResult(Message.ReviewDeleted));
+
+});
+
+export const getReviewById = errorWrapper(async(req, res, next) => {
+
+    const review = req.queryResult;
+
+    return res
+    .status(200)
+    .json(new SuccessDataResult(null, review));
 
 });
