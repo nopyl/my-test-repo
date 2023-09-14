@@ -8,6 +8,7 @@ import Category from "./Category.model.js";
 import Review from "./Review.model.js";
 import Coupon from "./Coupon.model.js";
 import Address from "./Address.model.js";
+import CreditCard from "./CreditCard.model.js";
 
 
 //User & Role -> Many to Many
@@ -50,6 +51,10 @@ Category.belongsToMany(Coupon, { through: "CouponCategories"});
 User.hasMany(Address, {foreignKey: "userUuid"});
 Address.belongsTo(User);
 
+//Credit Card & User -> One to Many
+User.hasMany(CreditCard, {foreignKey: "userUuid"});
+CreditCard.belongsTo(User);
+
 await db.sync();
 export {
     User,
@@ -60,5 +65,6 @@ export {
     Category,
     Review,
     Coupon,
-    Address
+    Address,
+    CreditCard
 };
