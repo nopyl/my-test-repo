@@ -8,6 +8,7 @@ import Brand from "../../models/Brand.model.js";
 import Product from "../../models/Product.model.js";
 import Category from "../../models/Category.model.js";
 import Review from "../../models/Review.model.js";
+import Coupon from "../../models/Coupon.model.js";
 
 export const checkUserExists = errorWrapper(async(req, res, next) => {
 
@@ -161,4 +162,28 @@ export const checkReviewExists = errorWrapper(async(req, res, next) => {
     req.queryResult = review;
     
     next();
+});
+
+export const checkCouponExists = errorWrapper(async(req, res, next) => {
+
+    const {uuid} = req.params;
+
+    if(!uuid){
+        return next(new CustomError(400, Message.NullUuid));
+    }
+
+    const coupon = await Coupon.findOne({
+        where: {
+            uuid: uuid
+        }
+    });
+
+    if(!coupon){
+        return next(new CustomError(404, Message.CouponNotFound))
+    }
+
+    req.queryResult = coupon;
+
+    next();
+
 });
