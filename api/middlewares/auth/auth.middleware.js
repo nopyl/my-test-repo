@@ -74,3 +74,15 @@ export const getAddressOwnerAccess = errorWrapper(async(req, res, next) => {
     next();
 
 });
+
+export const getCreditCardOwnerAccess = errorWrapper(async(req, res, next) => {
+
+    const creditCard = req.queryResult;
+
+    if(creditCard.userUuid !== req.user.uuid){
+
+        return next(new CustomError(403, Message.Unauthorized));
+    }
+
+    next();
+});
