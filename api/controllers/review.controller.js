@@ -79,3 +79,13 @@ export const getReviewById = errorWrapper(async(req, res, next) => {
     .json(new SuccessDataResult(null, review));
 
 });
+
+export const getAllReviews = errorWrapper(async(req, res, next) => {
+
+    const reviews = await Review.findAll();
+
+    return res
+    .status(200)
+    .json(new SuccessDataResult(null, reviews));
+
+});
