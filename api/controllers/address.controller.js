@@ -4,6 +4,7 @@ import { validateInputs } from "../utils/helpers/input.helper.js";
 import CustomError from "../utils/error/CustomError.js";
 import Message from "../utils/message/message.util.js";
 import { SuccessResult } from "../utils/result/SuccessResult.js";
+import { SuccessDataResult } from "../utils/result/SuccessDataResult.js";
 
 export const createAddress = errorWrapper(async(req, res, next) => {
 
@@ -68,4 +69,14 @@ export const deleteAddress = errorWrapper(async(req, res, next) => {
     return res
     .status(200)
     .json(new SuccessResult(Message.AddressDeleted));
+});
+
+export const getAddressById = errorWrapper(async(req, res, next) => {
+
+    const address = req.queryResult;
+    
+    return res
+    .status(200)
+    .json(new SuccessDataResult(null, address));
+
 });
