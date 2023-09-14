@@ -27,3 +27,21 @@ export const createCreditCard = errorWrapper(async(req, res, next) => {
     .json(new SuccessResult(Message.CreditCardCreated));
 
 });
+
+export const updateCreditCard = errorWrapper(async(req, res, next) => {
+
+    const {cardOwner, cardNumber, expireDate, cvv} = req.body;
+    const creditCard = req.queryResult;
+
+    await creditCard.update({
+        cardOwner,
+        cardNumber,
+        expireDate,
+        cvv
+    });
+
+    return res
+    .status(200)
+    .json(new SuccessResult(Message.CreditCardUpdated));
+
+});
