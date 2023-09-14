@@ -38,3 +38,20 @@ export const createReview = errorWrapper(async(req, res, next) => {
     .json(new SuccessResult(Message.ReviewCreated));
 
 });
+
+export const updateReview = errorWrapper(async(req, res, next) => {
+
+    const {starCount, message} = req.body;
+    const review = req.queryResult;
+
+    if(!starCount && !message){
+        return next(new CustomError(400, Message.BlankInputs));
+    }
+
+    await review.update({starCount, message});
+    
+    return res
+    .status(200)
+    .json(new SuccessResult(Message.ReviewUpdated));
+
+});

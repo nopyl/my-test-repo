@@ -51,6 +51,8 @@ class Message {
     static ReviewStarValidationError = "Review star must be between 1 and 5";
     static ReviewCreated = "Review has been successfully started";
     static ReviewAlreadyCreated = "You have already created a review";
+    static ReviewNotFound = "Review not found";
+    static ReviewUpdated = "Review has been successfully updated";
 }
 
 export default Message;
