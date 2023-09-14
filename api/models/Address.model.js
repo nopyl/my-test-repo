@@ -8,6 +8,10 @@ const Address = db.define("Address", {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4
     },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     city: {
         type: DataTypes.STRING,
         allowNull: false
@@ -27,6 +31,10 @@ const Address = db.define("Address", {
     flatNumber: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    details: {
+        type: DataTypes.STRING,
+        allowNull: true
     },
     userUuid: {
         type: DataTypes.UUID,

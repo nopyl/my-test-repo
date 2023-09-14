@@ -1,5 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
+import { createAddress } from "../controllers/address.controller.js";
 
 export const addressRouter = Router();
 

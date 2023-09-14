@@ -6,6 +6,7 @@ import { brandRouter } from "./brand.router.js";
 import { productRouter } from "./product.router.js";
 import { categoryRouter } from "./category.router.js";
 import { couponRouter } from "./coupon.router.js";
+import { addressRouter } from "./address.router.js";
 
 export const appRouter = Router();
 
@@ -16,3 +17,4 @@ appRouter.use("/brand", brandRouter);
 appRouter.use("/product", productRouter);
 appRouter.use("/category", categoryRouter);
 appRouter.use("/coupon", couponRouter);
+appRouter.use("/address", addressRouter);

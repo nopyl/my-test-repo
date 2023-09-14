@@ -7,25 +7,27 @@ import { SuccessResult } from "../utils/result/SuccessResult.js";
 
 export const createAddress = errorWrapper(async(req, res, next) => {
 
-    const {city, town, street, buildingNumber, flatNumber} = req.body;
+    const {title, city, town, street, buildingNumber, flatNumber, details} = req.body;
 
-    if(!validateInputs(city, town, street, buildingNumber, flatNumber)){
+    if(!validateInputs(title, city, town, street, buildingNumber, flatNumber)){
 
         return next(new CustomError(400, Message.BlankInputs));
     }
 
     await Address.create({
+        title: title,
         city: city,
         town: town,
         street: street,
         buildingNumber: buildingNumber,
-        flatNumber: flatNumber
-
+        flatNumber: flatNumber,
+        details: details,
+        userUuid: req.user.uuid
     });
 
     return res
     .status(201)
-    .json(new SuccessResult(Message.AddressCreated))
+    .json(new SuccessResult(Message.AddressCreated));
 
 
 });
