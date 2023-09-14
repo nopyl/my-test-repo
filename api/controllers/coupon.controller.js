@@ -51,7 +51,7 @@ export const createCoupon = errorWrapper(async(req, res, next) => {
 export const updateCoupon = errorWrapper(async(req, res, next) => {
 
     const {code, communityLimit, expireDate, categories} = req.body;
-    const coupon = req.queryParams;
+    const coupon = req.queryResult;
 
     if(!code && !communityLimit && !expireDate && !categories){
         return next(new CustomError(400, Message.BlankInputs));
@@ -67,5 +67,17 @@ export const updateCoupon = errorWrapper(async(req, res, next) => {
     return res
     .status(200)
     .json(new SuccessResult(Message.CouponUpdated));
+
+});
+
+export const deleteCoupon = errorWrapper(async(req, res, next) => {
+
+    const coupon = req.queryResult;
+
+    await coupon.destroy();
+
+    return res
+    .status(200)
+    .json(new SuccessResult(Message.CouponDeleted));
 
 });

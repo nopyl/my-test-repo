@@ -57,6 +57,7 @@ class Message {
     static CouponCreated = "Coupon has been successfully created";
     static CouponNotFound = "Coupon not found";
     static CouponUpdated = "Coupon has been succesfully updated";
+    static CouponDeleted = "Coupon has been successfully deleted";
 }
 
 export default Message;
