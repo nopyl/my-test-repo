@@ -61,6 +61,7 @@ class Message {
     static AddressCreated = "Address has been successfully created";
     static AddressNotFound = "Address not found";
     static AddressUpdated = "Address has been successfully updated";
+    static AddressDeleted = "Address has been successfully deleted";
 }
 
 export default Message;

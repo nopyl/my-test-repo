@@ -58,3 +58,14 @@ export const updateAddress = errorWrapper(async(req, res, next) => {
 
 
 });
+
+export const deleteAddress = errorWrapper(async(req, res, next) => {
+
+    const address = req.queryResult;
+
+    await address.destroy();
+
+    return res
+    .status(200)
+    .json(new SuccessResult(Message.AddressDeleted));
+});
