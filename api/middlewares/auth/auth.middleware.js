@@ -50,3 +50,15 @@ export const getStaffAccess = errorWrapper(async(req, res, next) => {
 
 
 });
+
+export const getReviewOwnerAccess = errorWrapper(async(req, res, next) => {
+
+    const review = req.queryResult;
+
+    if(review.userUuid !== req.user.uuid){
+        return next(new CustomError(403, Message.Unauthorized));
+    }
+
+    return next();
+
+});
