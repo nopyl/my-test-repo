@@ -10,6 +10,7 @@ import Category from "../../models/Category.model.js";
 import Review from "../../models/Review.model.js";
 import Coupon from "../../models/Coupon.model.js";
 import Address from "../../models/Address.model.js";
+import CreditCard from "../../models/CreditCard.model.js";
 
 export const checkUserExists = errorWrapper(async(req, res, next) => {
 
@@ -204,6 +205,22 @@ export const checkAddressExists = errorWrapper(async(req, res, next) => {
     }
 
     req.queryResult = address;
+
+    next();
+
+});
+
+export const checkCreditCardExists = errorWrapper(async(req, res, next) => {
+
+    const {uuid} = req.params;
+
+    const creditCard = await CreditCard.findByPk(uuid);
+
+    if(!creditCard){
+        return next(new CustomError(404, Message.CreditCardNotFound));
+    }
+
+    req.queryResult = creditCard;
 
     next();
 
