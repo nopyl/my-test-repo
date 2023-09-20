@@ -55,7 +55,7 @@ export const updateAddress = errorWrapper(async(req, res, next) => {
 
     return res
     .status(200)
-    .json(new SuccessResult(Message.AddressUpdated))
+    .json(new SuccessResult(Message.AddressUpdated));
 
 
 });
