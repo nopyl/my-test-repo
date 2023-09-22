@@ -131,7 +131,7 @@ export const changeEmail = errorWrapper(async(req, res, next) => {
     }
 
     if(user.email === email){
-        return next(new CustomError(400, Message.CircularEmail))
+        return next(new CustomError(400, Message.CircularEmail));
     }
 
     const isEmailExists = await User.count({
