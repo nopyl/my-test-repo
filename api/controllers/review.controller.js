@@ -15,7 +15,9 @@ export const createReview = errorWrapper(async(req, res, next) => {
         return next(new CustomError(400, Message.BlankInputs));
     }
 
-    /* */
+    /* 
+    The check that whether user bought the product will be added.
+    */
 
     const review = await Review.findOne({
         userUuid: req.user.uuid,
