@@ -9,6 +9,7 @@ import Review from "./Review.model.js";
 import Coupon from "./Coupon.model.js";
 import Address from "./Address.model.js";
 import CreditCard from "./CreditCard.model.js";
+import Order from "./Order.model.js";
 
 
 //User & Role -> Many to Many
@@ -55,6 +56,22 @@ Address.belongsTo(User);
 User.hasMany(CreditCard, {foreignKey: "userUuid"});
 CreditCard.belongsTo(User);
 
+//Order & Product -> Many to Many
+Product.belongsToMany(Order, {through: "OrderProducts"});
+Order.belongsToMany(Product, {through: "OrderProducts"});
+
+//Order & User -> One to Many
+User.hasMany(Order, { foreignKey: "userUuid"});
+Order.belongsTo(User);
+
+//Order & Coupon -> One to Many
+Coupon.hasMany(Order, { foreignKey: "couponUuid"});
+Order.belongsTo(Coupon);
+
+//Order & Address -> One to Many
+Address.hasMany(Order, { foreignKey: "addressUuid"});
+Order.belongsTo(Address);
+
 await db.sync();
 export {
     User,
@@ -66,5 +83,6 @@ export {
     Review,
     Coupon,
     Address,
-    CreditCard
+    CreditCard,
+    Order
 };
